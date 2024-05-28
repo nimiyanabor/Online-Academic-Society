@@ -437,16 +437,50 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.like-count').forEach(function(element) {
         element.addEventListener('click', function() {
             const postId = this.getAttribute('data-post-id');
-            const overlay = document.getElementById('like-overlay-' + postId);
-            const likeList = document.getElementById('like-list-' + postId);
+            if (postId) {
+                const overlay = document.getElementById('like-overlay-' + postId);
+                const likeList = document.getElementById('like-list-' + postId);
 
-            // Fetch the list of users who liked the post
-            fetch('get_likes.php?post_id=' + postId)
-                .then(response => response.json())
-                .then(data => {
-                    likeList.innerHTML = data.likes.map(user => `<p>${user}</p>`).join('');
-                    overlay.style.display = 'flex'; // Show the overlay
-                });
+                fetch('get_likes.php?post_id=' + postId)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Data received: ", data); // Debugging line to check data
+                        if (data.likes && Array.isArray(data.likes)) {
+                            likeList.innerHTML = data.likes.map(user => `<p>${user}</p>`).join('');
+                        } else {
+                            likeList.innerHTML = '<p>No likes found.</p>';
+                        }
+                        overlay.style.display = 'flex';
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            } else {
+                console.error('Post ID is null or undefined');
+            }
+        });
+    });
+    document.querySelectorAll('.comment-count').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const postId = this.getAttribute('data-post-id');
+            if (postId) {
+                const overlay = document.getElementById('comment-overlay-' + postId);
+                const commentList = document.getElementById('comment-list-' + postId);
+
+                fetch('get_comments.php?post_id=' + postId)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.comments && Array.isArray(data.comments)) {
+                            commentList.innerHTML = data.comments.map(comment => `<p><strong>${comment.fullname}</strong>: ${comment.comment}</p>`).join('');
+                        } else {
+                            commentList.innerHTML = '<p>No comments found.</p>';
+                        }
+                        overlay.style.display = 'flex';
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            }
         });
     });
 
@@ -457,6 +491,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelectorAll('.like-overlay').forEach(function(overlay) {
+        overlay.addEventListener('click', function(event) {
+            if (event.target === overlay) {
+                overlay.style.display = 'none';
+            }
+        });
+    });
+    document.querySelectorAll('.close-comment-container').forEach(function(button) {
+        button.addEventListener('click', function() {
+            this.closest('.comment-overlay').style.display = 'none';
+        });
+    });
+
+    document.querySelectorAll('.comment-overlay').forEach(function(overlay) {
         overlay.addEventListener('click', function(event) {
             if (event.target === overlay) {
                 overlay.style.display = 'none';

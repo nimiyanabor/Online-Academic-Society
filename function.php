@@ -31,7 +31,31 @@ function getUserProfileImage($user_id) {
     $conn->close();
     return $profile_image;
 }
+function getUserProfile($user_id) {
+    $conn = getConnection();
+    $sql = "
+        SELECT 
+            u.username, u.fullname, u.email, u.department, u.level, pr.profile_image, u.bio
+        FROM 
+            user u
+        LEFT JOIN 
+            profile pr ON u.id = pr.user_id
+        WHERE 
+            u.id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $profile = null;
+    if ($result->num_rows == 1) {
+        $profile = $result->fetch_assoc();
+    }
 
+    $stmt->close();
+    $conn->close();
+    return $profile;
+}
 function addPost($user_id, $caption, $images) {
     $conn = getConnection();
     $success = true;

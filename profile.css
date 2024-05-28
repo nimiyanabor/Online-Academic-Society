@@ -695,10 +695,17 @@ body{
     padding-left: 10px;
     padding-bottom: 2px;
 }
+.feed-interaction-details .feed-likes-container .like-count:hover{
+    cursor: pointer;
+}
+.feed-interaction-details .feed-likes-container .like-count:active{
+    color:var(--color-primary);
+}
 .feed-interaction-details p{
     color: black;
     padding:0;
 }
+
 .like-overlay {
     display: none; /* Hidden by default */
     position: fixed; 
@@ -706,7 +713,7 @@ body{
     left: 0; 
     width: 100%; 
     height: 100%; 
-    background: rgba(0, 0, 0, 0.8); 
+    background: transparent; 
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -715,13 +722,74 @@ body{
 .like-container {
     background: white;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 1rem;
     position: relative;
     max-width: 500px;
     width: 90%;
+    max-height: 400px;
+    box-shadow: 0px 0px 10px 5px var(--color-primary);
+}
+.like-container .header-liked-container{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.like-container .header-liked-container p{
+    font-size: 30px;
+    font-weight: 500;
+}
+.close-like-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
 }
 
-.close-like-container {
+.like-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.comment-overlay {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: transparent; 
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-overlay .comment-container {
+    background: white;
+    padding: 20px;
+    border-radius: 1rem;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    max-height: 400px;
+    box-shadow: 0px 0px 10px 5px var(--color-primary);
+}
+.comment-container .comment-container .header-liked-container{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.comment-container .like-container .header-liked-container p{
+    font-size: 30px;
+    font-weight: 500;
+}
+.close-comment-container {
     position: absolute;
     top: 10px;
     right: 10px;

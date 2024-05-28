@@ -48,14 +48,7 @@ $userId =($_GET['id']);
     <script src="profile.js"></script>
 </head>
 <body>
-        <div class="like-overlay" id="like-overlay-<?php echo $post['id']; ?>">
-            <div class="like-container">
-                <button class="close-like-container">&times;</button>
-                <div class="like-list" id="like-list-<?php echo $post['id']; ?>">
-                    <!-- List of users who liked the post will be populated here -->
-                </div>
-            </div>
-        </div>
+
     <div class="container">
         <div class="profile-top">
             <div class="left-top">
@@ -198,28 +191,44 @@ $posts = getUserPosts($profileUserId, $currentUserId);
             </div>
         </div>
         <div class="feed-interaction-details">
-        <div class="feed-likes-container">
-            <?php if ($post['like_count'] > 0): ?>
-                <?php if ($post['like_count'] == 1): ?>
-                    <p class="like-count">Liked by 1 student</p>
-                <?php else: ?>
-                    <p class="like-count">Liked by <?php echo htmlspecialchars($post['like_count']); ?> students</p>
-                <?php endif; ?>
-            <?php endif; ?>
-        </div>
-
-            <div class="feed-comments-container">
-            <?php if ($post['comment_count'] > 0): ?>
-                    <?php if ($post['comment_count'] == 1): ?>
-                        <p>View comment</p>
+            <div class="feed-likes-container">
+                <?php if ($post['like_count'] > 0): ?>
+                    <?php if ($post['like_count'] == 1): ?>
+                        <p class="like-count" data-post-id="<?php echo $post['id']; ?>">Liked by 1 student</p>
                     <?php else: ?>
-                        <p>View all <?php echo htmlspecialchars($post['comment_count']); ?> comment</p>
+                        <p class="like-count" data-post-id="<?php echo $post['id']; ?>">Liked by <?php echo htmlspecialchars($post['like_count']); ?> students</p>
                     <?php endif; ?>
                 <?php endif; ?>
             </div>
-            <div class="feed-comments-close">
-                    <input type="text" name="feedcomment" id="feedcomment-<?php echo $post['id']; ?>" placeholder="comments..">
-                    <button id="post-comment-button" class="btn btn-primary post-comment-button" data-post-id="<?php echo $post['id']; ?>">Post</button>
+
+            <div class="feed-comments-container">
+                <?php if ($post['comment_count'] > 0): ?>
+                        <?php if ($post['comment_count'] == 1): ?>
+                            <p class="comment-count" data-post-id="<?php echo $post['id']; ?>">View comment</p>
+                        <?php else: ?>
+                            <p class="comment-count" data-post-id="<?php echo $post['id']; ?>">View all <?php echo htmlspecialchars($post['comment_count']); ?> comment</p>
+                        <?php endif; ?>
+                    <?php endif; ?>
+            </div>
+                <div class="feed-comments-close">
+                        <input type="text" name="feedcomment" id="feedcomment-<?php echo $post['id']; ?>" placeholder="comments..">
+                        <button id="post-comment-button" class="btn btn-primary post-comment-button" data-post-id="<?php echo $post['id']; ?>">Post</button>
+                </div>
+        </div>
+        <div class="like-overlay" id="like-overlay-<?php echo $post['id']; ?>">
+            <div class="like-container">
+                <div class="header-liked-container">
+                    <p>Liked by</p>
+                </div>
+                <div class="like-list" id="like-list-<?php echo $post['id']; ?>">
+                    <!-- List of users who liked the post will be populated here -->
+                </div>
+            </div>
+        </div>
+        <div id="comment-overlay-<?php echo $post['id']; ?>" class="comment-overlay">
+            <div class="comment-container">
+                
+                <div id="comment-list-<?php echo $post['id']; ?>" class="comment-list"></div>
             </div>
         </div>
         <div class="gallery-view">
