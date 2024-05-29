@@ -371,3 +371,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Add form submission logic here if needed
 });
+// Show the modal when the friends-container is clicked
+document.querySelector('.friends-container').addEventListener('click', function() {
+    document.getElementById('showfriends').style.display = 'block';
+    fetchFriends();
+});
+
+// Close the modal when the close button is clicked
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('showfriends').style.display = 'none';
+});
+
+// Close the modal when clicking outside of the modal content
+window.onclick = function(event) {
+    if (event.target == document.getElementById('showfriends')) {
+        document.getElementById('showfriends').style.display = 'none';
+    }
+};
+
+// Fetch friends from the server
+function fetchFriends() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'fetch_friends.php', true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var friends = JSON.parse(xhr.responseText);
+            var friendContainer = document.getElementById('friendContainer');
+            friendContainer.innerHTML = '';
+
+            friends.forEach(function(friend) {
+                var div = document.createElement('div');
+                div.textContent = friend.fullname;
+                friendContainer.appendChild(div);
+            });
+        }
+    };
+    xhr.send();
+}

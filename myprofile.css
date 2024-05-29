@@ -209,6 +209,13 @@ body{
     font-size: 30px;
     cursor: pointer;
 }
+.edit-profile-modal .modal-content form input,textarea{
+    padding: 6px 10px;
+    border-radius:1rem;
+    border:none;
+    outline:none;
+    box-shadow: 0px 0px 5px 2px var(--color-primary);
+}
 .bio-container .bio-text-container{
     width: 350px;
     height: 150px;
@@ -818,12 +825,17 @@ body{
     cursor: pointer;
 }
 
-.like-list {
+.comment-list {
     max-height: 300px;
     overflow-y: auto;
 }
 
-
+.comment-list textarea{
+    padding: 6px 10px;
+    border:none;
+    outline: none;
+    border-radius: 1rem;
+}
 .feed-interaction-details .feed-comments-close{
     display: none;
 }
@@ -984,4 +996,47 @@ body{
     background-color: var(--color-light);
     border-radius: 1rem;
     padding:0px 10px;
+}
+.show-friends {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.show-friends .friends-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.show-friends .friends-content .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.show-friends .friends-content .close:hover,
+.show-friends .friends-content .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.show-friends .friends-content .friend-container {
+    list-style-type: none;
+    padding: 0;
+}
+
+.show-friends .friends-content .friend-container div {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }

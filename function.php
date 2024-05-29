@@ -159,5 +159,34 @@ function getUserPosts($userId, $currentUserId) {
     return $posts;
 }
 
+
+function getfriends($userId) {
+    $conn = getConnection();
+
+
+    $query = "
+        SELECT u.fullname, u.username
+        FROM friends pl
+        JOIN user u ON pl.user1_id OR pl.user2_id = u.id
+        WHERE pl.user1_id OR pl.user2_id = ?
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $friend = [];
+    while ($row = $result->fetch_assoc()) {
+        $friend[] = $row['fullname'];
+    }
+
+
+    $stmt->close();
+    $conn->close();
+    return $friend;
+
+} 
+
 ?>
 

@@ -350,6 +350,14 @@ $posts = getUserPosts($profileUserId, $currentUserId);
                 </form>
             </div>
         </div>
+        <div class="show-friends" id="showfriends">
+            <div class="friends-content">
+                <span class="close" id="closeModal">&times;</span>
+                <h2>Friends List</h2>
+                <div class="friend-container" id="friendContainer"></div>
+            </div>
+        </div>
+
     <script src="myprofile.js"></script>
 </body>
 </html>
