@@ -366,7 +366,7 @@ main .middle{
     display:flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     overflow-y: scroll;
 }
 
@@ -449,7 +449,7 @@ main .middle{
     width: 500px;
     height: auto;
     background-color: white;
-    margin: 40px 70px;
+    margin: 40px 0px;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -481,7 +481,6 @@ main .middle{
     align-items: center;
     justify-content: space-around;
     border-radius: 50%;
-    background-color: red;
     overflow: hidden;
 }
 .feed-profile img{
@@ -506,10 +505,11 @@ main .middle{
 .feed-caption p{
     text-align: justify;
     color: black;
+    padding:0px 5px;
 }
 .gallery-container {
     position: relative; /* Add position relative */
-    width: 100%; /* Fixed width */
+    width: 500px; /* Fixed width */
     height: 300px; /* Fixed height */
     text-align: center;
     display: flex;
@@ -552,8 +552,9 @@ main .middle{
     align-items: center;
   }
   .gallery-view img, .gallery-view video {
-    max-width: 90%;
-    max-height: 90%;
+    max-width: 500px;
+    max-height: 600px;
+    object-fit: cover;
   }
   .btn-close {
     position: absolute;
@@ -610,7 +611,7 @@ main .middle{
     justify-content: space-around;
   }
   #total-images p{
-    margin-top: 60px;
+    margin-top: 30px;
     text-align: center;
     font-size: 35px;
     color:black;
@@ -619,7 +620,7 @@ main .middle{
   }
 .postfeed-container .feed-interaction{
     width: 100%;
-    height: 40px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -637,29 +638,154 @@ main .middle{
     font-size: 25px;
     padding-left: 10px;
     color: var(--color-primary);
+    cursor:pointer;
+}
+.left-feed-interaction i:hover{
+    opacity: 0.8;
+}
+.left-feed-interaction .liked-post{
+    color:red;
+}
+.left-feed-interaction .not-liked-post{
+    color:var(--color-primary);
 }
 .feed-interaction .right-feed-interaction{
     width: auto;
     height: 100%;
 }
-.right-feed-interaction a i{
+.right-feed-interaction  i{
     font-size: 25px;
     padding-right: 10px;
     color: var(--color-primary);
 }
+.right-feed-interaction i:hover{
+    opacity: 0.8;
+}
+.right-feed-interaction .saved-post{
+    color:black;
+}
+.right-feed-interaction .not-saved-post{
+    color:var(--color-primary);
+}
 .postfeed-container .feed-interaction-details{
     width: 100%;
-    height: 50px;
-    margin-bottom: 10px;
+    height: 90px;
+    margin-bottom: 2px;
 }
 .feed-interaction-details .feed-likes-container, .feed-comments-container{
     height: 25px;
     padding-left: 10px;
-    padding-bottom: 7px;
+    padding-bottom: 2px;
+}
+.feed-interaction-details .feed-likes-container .like-count:hover{
+    cursor: pointer;
+}
+.feed-interaction-details .feed-likes-container .like-count:active{
+    color:var(--color-primary);
 }
 .feed-interaction-details p{
     color: black;
+    padding:0;
 }
+
+.like-overlay {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: transparent; 
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.like-container {
+    background: white;
+    padding: 20px;
+    border-radius: 1rem;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    max-height: 400px;
+    box-shadow: 0px 0px 10px 5px var(--color-primary);
+}
+.like-container .header-liked-container{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.like-container .header-liked-container p{
+    font-size: 30px;
+    font-weight: 500;
+}
+.close-like-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.like-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.comment-overlay {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: transparent; 
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-overlay .comment-container {
+    background: white;
+    padding: 20px;
+    border-radius: 1rem;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    max-height: 400px;
+    box-shadow: 0px 0px 10px 5px var(--color-primary);
+}
+.comment-container .comment-container .header-liked-container{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.comment-container .like-container .header-liked-container p{
+    font-size: 30px;
+    font-weight: 500;
+}
+.close-comment-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.like-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 .feed-interaction-details .feed-comments-close{
     display: none;
 }
@@ -680,9 +806,12 @@ main .middle{
 .feed-comments-open input{
     width: 280px;
     height: 40px;
-    background-color: var(--color-light);
+    background-color:transparent;
     border-radius: 1rem;
+    border: none;
     padding:0px 10px;
+    outline: none;
+    box-shadow: 0px 0px 5px 3px var(--color-secondary);
 }
 
 .middle .article-container{

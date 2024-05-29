@@ -197,6 +197,7 @@ $posts = getUserPosts($profileUserId, $currentUserId);
                 }
             }
             ?>
+            <div class=" gallery-imgs" id="total-images"></div> <!-- Change span to div -->
         </div>
         <div class="feed-interaction">
             <div class="left-feed-interaction">

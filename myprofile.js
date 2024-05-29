@@ -90,7 +90,7 @@
   
             const numImages = galleryImages.length;
             const containerWidth = 380;
-            const containerHeight = 200;
+            const containerHeight = 190;
             let width, height;
   
             if (numImages === 1) {
@@ -211,17 +211,7 @@
               }
           });
       });
-      document.querySelectorAll('.uil-share-alt').forEach(function(icon) {
-          icon.addEventListener('click', function() {
-              const postUrl = this.getAttribute('data-post-url');
-  
-              navigator.clipboard.writeText(postUrl).then(() => {
-                  alert('Post link copied to clipboard!');
-              }).catch(err => {
-                  console.error('Could not copy text: ', err);
-              });
-          });
-      });
+
       document.querySelectorAll('.uil-share-alt').forEach(function(icon) {
           icon.addEventListener('click', function() {
               const postUrl = this.getAttribute('data-post-url');

@@ -557,7 +557,7 @@ body{
 .gallery-container {
     position: relative; /* Add position relative */
     width: 100%; /* Fixed width */
-    height: 200px; /* Fixed height */
+    height: 230px; /* Fixed height */
     text-align: center;
     display: flex;
     flex-wrap: wrap;

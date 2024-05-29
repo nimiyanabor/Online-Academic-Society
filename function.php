@@ -186,7 +186,113 @@ function getfriends($userId) {
     $conn->close();
     return $friend;
 
-} 
+}
+
+function getFriendsIds($userId) {
+    $conn = getConnection();
+    $query = "
+        SELECT 
+            CASE 
+                WHEN f.user1_id = ? THEN f.user2_id 
+                ELSE f.user1_id 
+            END AS friend_id
+        FROM friends f
+        WHERE 
+            (f.user1_id = ? OR f.user2_id = ?) AND f.status = 'accepted'
+    ";
+
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        echo 'Error: ' . $conn->error;
+        return [];
+    }
+
+    $stmt->bind_param('iii', $userId, $userId, $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $friendIds = [];
+    while ($row = $result->fetch_assoc()) {
+        $friendIds[] = $row['friend_id'];
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $friendIds;
+}
+
+
+function getUserAndFriendsPosts($currentUserId) {
+    $conn = getConnection();
+    $friendIds = getFriendsIds($currentUserId);
+
+    // Add the current user's ID to the list of IDs
+    $userIds = array_merge([$currentUserId], $friendIds);
+
+    // Create a string with the appropriate number of placeholders
+    $placeholders = implode(',', array_fill(0, count($userIds), '?'));
+
+    $query = "
+        SELECT 
+            p.id, p.user_id, p.post, p.caption, p.created_at, 
+            (SELECT COUNT(*) FROM post_like WHERE post_like.post = p.id) AS like_count,
+            (SELECT COUNT(*) FROM post_comment WHERE post_comment.post = p.id) AS comment_count,
+            (SELECT 1 FROM post_like WHERE post_like.post = p.id AND post_like.liked_by = ?) AS liked_by_user,
+            (SELECT COUNT(*) FROM saved_post WHERE saved_post.post = p.id AND saved_post.user_id = ?) AS saved_by_user,
+            pr.profile_image, u.fullname
+        FROM 
+            post p
+        JOIN 
+            user u ON p.user_id = u.id
+        LEFT JOIN 
+            profile pr ON u.id = pr.user_id
+        WHERE 
+            p.user_id IN ($placeholders)
+        ORDER BY 
+            p.created_at DESC
+    ";
+
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        echo 'Error: ' . $conn->error;
+        return [];
+    }
+
+    // Prepare the parameters for bind_param
+    $params = array_merge([$currentUserId, $currentUserId], $userIds);
+    $paramTypes = str_repeat('i', count($params));
+    $stmt->bind_param($paramTypes, ...$params);
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $posts = [];
+    while ($row = $result->fetch_assoc()) {
+        $key = $row['caption'] . '|' . $row['created_at'] . '|' . $row['user_id'];
+        if (!isset($posts[$key])) {
+            $posts[$key] = [
+                'profile_image' => $row['profile_image'],
+                'fullname' => $row['fullname'],
+                'caption' => $row['caption'],
+                'created_at' => $row['created_at'],
+                'like_count' => $row['like_count'],
+                'comment_count' => $row['comment_count'],
+                'liked_by_user' => $row['liked_by_user'],
+                'saved_by_user' => $row['saved_by_user'],
+                'id' => $row['id'],
+                'media' => []
+            ];
+        }
+        $posts[$key]['media'][] = $row['post'];
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $posts;
+}
+
 
 ?>
 
