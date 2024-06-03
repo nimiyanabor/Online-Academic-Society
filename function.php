@@ -31,6 +31,7 @@ function getUserProfileImage($user_id) {
     $conn->close();
     return $profile_image;
 }
+
 function getUserProfile($user_id) {
     $conn = getConnection();
     $sql = "
@@ -293,6 +294,69 @@ function getUserAndFriendsPosts($currentUserId) {
     return $posts;
 }
 
+
+function getfriendrequest($userId){
+    $conn = getConnection();
+
+    $query = "
+        SELECT u.fullname
+        FROM friends pl
+        JOIN user u ON pl.user2_id = ?
+        WHERE pl.status = 'pending'
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $request = [];
+    while ($row = $result->fetch_assoc()) {
+        $request[] = $row['fullname'];
+    }
+
+
+    $stmt->close();
+    $conn->close();
+
+    return $request;
+}
+
+
+function getPendingRequestSenderInfo($sessionUserId) {
+    $conn = getConnection();
+    $query = "
+        SELECT f.id AS request_id, u.fullname, p.profile_image
+        FROM friends f
+        JOIN user u ON f.user1_id = u.id
+        LEFT JOIN profile p ON u.id = p.user_id
+        WHERE f.user2_id = ? AND f.status = 'pending'
+    ";
+
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        echo 'Error: ' . $conn->error;
+        return null;
+    }
+
+    $stmt->bind_param('i', $sessionUserId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $info = null;
+    if ($row = $result->fetch_assoc()) {
+        $info = [
+            'request_id' => $row['request_id'],
+            'fullname' => $row['fullname'],
+            'profile_picture' => $row['profile_image'] ? $row['profile_image'] : 'default.png'
+        ];
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $info;
+}
 
 ?>
 

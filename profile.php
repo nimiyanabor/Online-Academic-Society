@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: /login.php");
+    header("Location: login.php");
     exit();
 }
 
@@ -55,7 +55,7 @@ $userId =($_GET['id']);
                 <div class="profile-pic">
                     <img id="profilePic" src="" alt="">
                 </div>
-                <p>@yanabor</p>
+                <p id="username">@</p>
             </div>
             <div class="right-top">
                 <div class="name">

@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       location.reload();
                   } else {
                       console.error('Error sending friend request:', response.error);
+                      location.reload();
                   }
               } catch (e) {
                   console.error('Invalid JSON response:', e);

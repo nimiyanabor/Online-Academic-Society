@@ -34,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['text-post']))  {
 }
 
 $post = getUserAndFriendsPosts($user_id);
+$friendrequest = getPendingRequestSenderInfo($user_id);
+$userProfile = getUserProfile($user_id);
 ?>
 
 <!DOCTYPE html>
@@ -99,9 +101,9 @@ $post = getUserAndFriendsPosts($user_id);
                     <img src="profile/<?php echo htmlspecialchars($profile_image); ?>" alt="Profile Picture">
                 </div>
                 <div class="handle">
-                    <h4>YANABOR</h4>
+                    <h4><?php echo htmlspecialchars($userProfile['fullname']); ?></h4>
                     <p class="text-muted">
-                        @yanabor001
+                        @<?php echo htmlspecialchars($userProfile['username']); ?>
                     </p>
                 </div>
             </a>
@@ -382,23 +384,36 @@ $post = getUserAndFriendsPosts($user_id);
                     </div>
                 </div>
             </div>
-            <div class="friend-request-container">
-                <h2>friend request</h2>
-                <div class="friend-request">
-                    <div class="profile-container">
-                        <div class="profile-image">
-                            <img src="fa847a5c-dba4-4958-8cb1-d2a879906bd6-cover.png" alt="">
+            <?php
+            if ($friendrequest) {
+                    $senderFullName = htmlspecialchars($friendrequest['fullname']);
+                    $requestId = $friendrequest['request_id'];
+                    $profilePicture = htmlspecialchars($friendrequest['profile_picture']);
+                    ?>
+                    <div class="friend-request-container">
+                        <h2>Friend Request</h2>
+                        <div class="friend-request">
+                            <div class="profile-container">
+                                <div class="profile-image">
+                                    <img src="profile/<?php echo $profilePicture; ?>" alt="Profile Picture">
+                                </div>
+                                <h3><?php echo $senderFullName; ?></h3>
+                            </div>
+                            <div class="accept-container btn btn-primary" onclick="handleRequest(<?php echo $requestId; ?>, 'accept')">
+                                <p>Accept</p>
+                            </div>
+                            <div class="decline-container btn" onclick="handleRequest(<?php echo $requestId; ?>, 'delete')">
+                                <p>Decline</p>
+                            </div>
                         </div>
-                        <h3>Belema</h3>
                     </div>
-                    <div class="accept-container btn btn-primary">
-                        <p>accept</p>
-                    </div>
-                    <div class="decline-container btn">
-                        decline
-                    </div>
-                </div>
-            </div>
+                    <?php
+                } else {
+                    echo "<div class='friend-request-container'>";
+                    echo "<h2> No Friend request </h2>";
+                    echo "</div>";
+                }
+                ?>
         </div>
     </main>
     <script src="home.js"></script>

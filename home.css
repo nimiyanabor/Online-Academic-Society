@@ -133,7 +133,7 @@ nav .create{
     height: 50px;
     object-fit: cover;
 }
-nav .create-containe{
+nav .create-container{
     display: none;
 }
 nav .create-container{
@@ -340,6 +340,7 @@ main .left{
 .handle h4:active, p:active{
     color:black
 }
+
 .left .sidebar{
     width:250px;
     height: auto;

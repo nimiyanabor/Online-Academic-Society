@@ -40,8 +40,14 @@ if ($requestMethod === 'POST') {
             $stmt = $mysqli->prepare('INSERT INTO friends (user1_id, user2_id, status, friend_time) VALUES (?, ?, ?, CURDATE())');
             $status = 'pending';
             $stmt->bind_param('iis', $userId, $friendId, $status);
-
+            
             if ($stmt->execute()) {
+                // Create a notification for the friend request
+                $message = "You have a new friend request from user $userId.";
+                $stmt = $mysqli->prepare("INSERT INTO notifications (user_id, type, message) VALUES (?, 'friend_request', ?)");
+                $stmt->bind_param("is", $friendId, $message);
+                $stmt->execute();
+                
                 $response = ['success' => true];
             } else {
                 $response = ['success' => false, 'error' => 'Database error: ' . $stmt->error];

@@ -100,74 +100,6 @@ $profileUserId =$_SESSION['id'];
                 </div>
                 <div class="middle">
             
-
-                    <div class="postfeed-container">
-                        <div class="feed-header">
-                            <a href="" >
-                                <div class="feed-profile">
-                                    <img src="fa847a5c-dba4-4958-8cb1-d2a879906bd6-cover.png" alt="">
-        
-                                </div>
-                                <h3>Yanabor</h3>
-                            </a>
-                            <div class="feed-options">
-                                <a href=""><i class="uil uil-ellipsis-h"></i></a>
-                            </div>
-                        </div>
-                        <div class="feed-caption">
-                            <p>Judging through the disires of men and how much does it take a woman to satify does desires</p>
-                        </div>
-                        <div class="gallery-container">
-                            <div class="gallery-img">
-                              <img class="gallery-img-img" src="fa847a5c-dba4-4958-8cb1-d2a879906bd6-cover.png" alt="Image 1">
-                            </div>
-                            <div class="gallery-img">
-                              <img class="gallery-img-img"  src="IMG_2499.JPG" alt="Image 2">
-                            </div>
-                            <div class="gallery-img">
-                              <img class="gallery-img-img"  src="fa847a5c-dba4-4958-8cb1-d2a879906bd6-cover.png" alt="Image 3">
-                            </div>
-                            <div class="gallery-img">
-                              <video class="gallery-img-video" autoplay muted  src="0c30b322a8acd511eab96ee02fdfe464.mp4" alt="Image 4">
-                            </div>
-                            <div class="gallery-img">
-                              <video class="gallery-img-video" autoplay muted src="0c30b322a8acd511eab96ee02fdfe464.mp4" alt="Image 4">
-                            </div>
-                            <div class="gallery-img">
-                                <img class="gallery-img-img" src="fa847a5c-dba4-4958-8cb1-d2a879906bd6-cover.png" alt="Image 1">
-                            </div>
-                            <div class=" gallery-imgs" id="total-images"></div> <!-- Change span to div -->
-                        </div>
-                        <div class="feed-interaction">
-                            <div class="left-feed-interaction">
-                                <i class="uil uil-heart"></i>
-                                <i class="uil uil-comment-dots" id="comment-button"></i>
-                                <i class="uil uil-share-alt"></i>
-                            </div>
-                            <div class="right-feed-interaction">
-                                <a href="" ><i class="uil uil-bookmark-full"></i></a>
-                            </div>
-                        </div>
-                        <div class="feed-interaction-details">
-                            
-                            <div class="feed-likes-container">
-                                <p>liked by you and 37 others</p>
-                            </div>
-                            <div class="feed-comments-container">
-                                <p>view all 12 comments</p>
-                            </div>
-                            <div class="feed-comments-close">
-                                <input type="text" name="feedcomment" id="feedcomment" placeholder="comments..">
-                                <button class="btn btn-primary"> Post</button>
-                            </div>
-                        </div>
-                        <div class="gallery-view">
-                            <div class="btn-close"><i class="uil uil-multiply"></i></div>
-                            <div class="btn-prev"><i class="uil uil-angle-left"></i></div>
-                            <div class="btn-next"><i class="uil uil-angle-right"></i></div>
-                            <div class="gallery-view-container"></div>
-                        </div>                               
-                    </div>
                     <?php 
 $posts = getUserPosts($profileUserId, $currentUserId);
 
@@ -267,71 +199,7 @@ $posts = getUserPosts($profileUserId, $currentUserId);
     </div>
 <?php endforeach; ?>
 
-                    <div class="article-container">
-                        <div class="article-header">
-                            <a href="" >
-                                <div class="article-profile">
-                                    <img src="fa847a5c-dba4-4958-8cb1-d2a879906bd6-cover.png" alt="">
-                                </div>
-                                <h3>Yanabor</h3>
-                            </a>
-                            <div class="article-options">
-                                <a href=""><i class="uil uil-ellipsis-h"></i></a>
-                            </div>
-                        </div>
-                        <div class="article-title">
-                            <h4>So many things we talk about</h4>
-                        </div>
-                        <div class="article-text">
-                            <p>Judging through the disires of men and how much does it take a woman to satify does desires</p>
-                        </div>
-                        <div class="article-interaction">
-                            <div class="left-article-interaction">
-                                <i class="uil uil-heart"></i>
-                                <i class="uil uil-comment-dots" id="article-comment-button"></i>
-                                <i class="uil uil-share-alt"></i>
-                            </div>
-                            <div class="right-article-interaction">
-                                <a href="" ><i class="uil uil-bookmark-full"></i></a>
-                            </div>
-                        </div>
-                        <div class="article-interaction-details">
-                            
-                            <div class="article-likes-container">
-                                <p>liked by you and 37 others</p>
-                            </div>
-                            <div class="article-comments-container">
-                                <p>view all 12 comments</p>
-                            </div>
-                            <div class="article-comments-close">
-                                <input type="text" name="feedcomment" id="feedcomment" placeholder="comments..">
-                                <button class="btn btn-primary"> Post</button>
-                            </div>
-                        </div>                              
-                    </div>
-                    <div class="podcast-container">
-                        <div class="cover-photo">
-                            <img src="fa847a5c-dba4-4958-8cb1-d2a879906bd6-cover.png" alt="">
-                        </div>
-                        <div class="podcast-description">
-                            <div class="podcast-title">
-                                <p class="episode-name">What do men wants?</p>
-                                <a href="" class="podcast-name"> Relationship talk with Steven</a>
-                            </div>
-                            
-                            <div class="podcast-info">
-                                <p>Judging through the disires of men and how much does it take a woman to satify does desires</p>
-                            </div>
-                            <div class="podcast-play-container">
-                                <i class="uil uil-play-circle play-play" ></i>
-                                <div class="save-podcast-contianer">
-                                    <i class="uil uil-bookmark-full"></i>
-                                    <i class="uil uil-ellipsis-h"></i>
-                                </div>
-                    
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

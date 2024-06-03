@@ -460,3 +460,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function handleRequest(requestId, action) {
+    var xhr = new XMLHttpRequest();
+    var url = 'handle_request.php'; // The PHP file to handle the request
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert('Action successful: ' + action);
+                        location.reload(); // Reload the page to see changes
+                    } else {
+                        alert('Action failed: ' + response.message);
+                    }
+                } catch (e) {
+                    console.error('Invalid JSON response:', xhr.responseText);
+                    alert('An error occurred while processing your request.');
+                }
+            } else {
+                console.error('HTTP error:', xhr.status, xhr.statusText);
+                location.reload();
+            }
+        }
+    };
+    xhr.send(JSON.stringify({ requestId: requestId, action: action }));
+}

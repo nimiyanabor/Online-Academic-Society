@@ -35,6 +35,10 @@ if ($requestMethod === 'POST') {
         $stmt->bind_param('ii', $userId, $friendId);
         if ($stmt->execute()) {
             $response = ['success' => true];
+            $message = "User $user2_id declined your friend request.";
+            $stmt = $db->prepare("INSERT INTO notifications (user_id, type, message) VALUES (?, 'friend_decline', ?)");
+            $stmt->bind_param("is", $user1_id, $message);
+            $stmt->execute();
         } else {
             $response = ['success' => false, 'error' => 'Database error: ' . $stmt->error];
         }
